@@ -1,2 +1,2 @@
 # Aefy
- Uma simples Classe Javascript para facilitar requisições assíncronas via Ajax.
+ Olá! Fiz alguns cursos e chegou a hora de criar projetos para colocar meus conhecimentos a prova. Essa é uma implementação bem simples que tem o objetivo de facilitar as requisições assíncronas feitas através do Ajax, e sim, eu tenho noção que já existem soluções para isso, porém, gosto de implementar coisas "do zero", por isso estarei desenvolvendo essa de minha autoria, inicialmente ela se chamará Aefy, sigla para "Ajax easier for you", "Ajax mais fácil para você" em português.
