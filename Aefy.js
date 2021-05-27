@@ -34,7 +34,7 @@ class Aefy {
 
   request(callback) {
     if (!this.ready) {
-      this.error(10 ,'You need to define the parameters to make the request, use the "prepare" method for this');
+      this.error(10 ,'Something is wrong, check the parameters you passed in the "prepare" method');
       return;
     } 
     if (this.method === "GET") {
