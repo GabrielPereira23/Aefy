@@ -1,9 +1,9 @@
 class Aefy {
   url = null;
   method = null;
-  content = null;
   contentString = null;
   ready = false;
+  ajax = new XMLHttpRequest();
   
   error(code, message) {
     this.reset();
@@ -20,7 +20,32 @@ class Aefy {
 
   prepare(url, method, content) {
     if (this.validation(url, method, content) && this.generateContentString(content)) {
-      console.log("Prepared!");
+      this.url = url;
+      this.method = method.toUpperCase();
+      this.ready = true;
+      if (this.method === "GET") {
+        this.ajax.open("GET", `${this.url}?${this.contentString}`, true);
+      } else {
+        this.ajax.open("POST", this.url, true);
+        this.ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      }
+    }
+  }
+
+  request(callback) {
+    if (!this.ready) {
+      this.error(10 ,'You need to define the parameters to make the request, use the "prepare" method for this');
+      return;
+    } 
+    if (this.method === "GET") {
+      this.ajax.send();
+    } else {
+      this.ajax.send(this.contentString);
+    }
+    this.ajax.onreadystatechange = () => {
+      if (this.ajax.readyState === 4 && this.ajax.status === 200) {
+        callback(this.ajax.responseText);
+      }
     }
   }
 
