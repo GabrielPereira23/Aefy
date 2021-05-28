@@ -34,7 +34,7 @@ class Aefy {
 
   request(callback) {
     if (!this.ready) {
-      this.error(10 ,'Something is wrong, check the parameters you passed in the "prepare" method');
+      this.error(9 ,'Something is wrong, check the parameters you passed in the "prepare" method');
       return;
     } 
     if (this.method === "GET") {
@@ -50,7 +50,6 @@ class Aefy {
   }
 
   generateContentString(content) {
-    let numOfAtributes = 0;
     let contentString = "";
     for (let key in content) {
       if (typeof content[key] !== "string") {
@@ -58,11 +57,6 @@ class Aefy {
         return false;
       }
       contentString += `${key}=${content[key]}&`;
-      numOfAtributes++;
-    }
-    if (numOfAtributes < 1) {
-      this.error(9, "The content object is empty");
-      return false;
     }
     contentString = contentString.slice(0, contentString.length - 1);
     this.contentString = contentString;
