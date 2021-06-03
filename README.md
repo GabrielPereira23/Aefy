@@ -2,26 +2,76 @@
 
 ## Introdução
 
- Olá! Fiz alguns cursos e chegou a hora de criar projetos para colocar meus conhecimentos a prova. Essa é uma implementação bem simples que tem o objetivo de facilitar as requisições assíncronas feitas através do Ajax, e sim, eu tenho noção que já existem soluções para isso, porém, gosto de implementar coisas "do zero", por isso estarei desenvolvendo essa de minha autoria, inicialmente ela se chamará Aefy, sigla para "Ajax easier for you", "Ajax mais fácil para você" em português.
+ Olá! Fiz alguns cursos e chegou a hora de criar projetos para colocar meus conhecimentos a prova. Essa é uma implementação bem simples que tem o objetivo de facilitar as requisições HTTP feitas através do Ajax, e sim, eu tenho noção que já existem soluções para isso, porém, gosto de implementar coisas "do zero", por isso estarei desenvolvendo essa de minha autoria, inicialmente ela se chamará Aefy, sigla para **Ajax Easier For You**, "Ajax mais fácil para você" em português.
 
+## Instalação
+Existem três formas de instalar o Aefy:
 
+1. Adicionando uma tag **script** no Html com o atributo **src** setado com o endereço do arquivo **Aefy.js** do repositório, recomendo a utilização do CDN gratuito **jsDelivr**, veja abaixo:
 
-## Como funciona?
+    ```html
+    <script src="https://cdn.jsdelivr.net/gh/GabrielPereira23/Aefy@main/Aefy.js"></script>
+    ```
 
-É uma implementação realmente simples, ela consiste em uma classe com alguns métodos que facilitam as requisições pelo Ajax, por exemplo, você não precisa digitar ```var exemplo = new XMLHttpRequest();```, a classe possui métodos que fazem isso por você.
+2. O Aefy também está presente no gerenciador de pacotes **NPM** como um módulo, use o comando abaixo para baixar:
 
-
+    ```
+    npm install aefy
+    ```
+    Depois é só importar a Classe para seu script
+    ```javascript
+    import Aefy from 'Aefy';
+    ```
+3. Você também pode simplesmente baixar o arquivo **Aefy.js** e importar ele através da tag **script**  (:
 
 ## Como utilizar?
 
- #### Passo 1
-  Primeiro você deve adicionar uma tag script com o atributo src apontado para: **https://cdn.jsdelivr.net/gh/GabrielPereira23/aefy@main/Aefy.js**.
- 
- #### Passo 2
-  Você instância a classe do Aefy ```const aefy = new Aefy();```, a partir de agora você só utilizara dois métodos.
-  
- #### Passo 3 
-  Agora você utiliza o método ```aefy.prepare(url, metodo, conteudo)``` para preparar a requisição, para ele você passa como parâmetros a **URL** da sua requisição, depois o **Método** (POST ou GET), e por fim, um **Objeto** com o conteúdo da sua requisição, exemplo: ```aefy.prepare('urlexemplo.php', 'get', {nome: 'Pedro', sobrenome: 'Silva'})```, veja como ficaria o url da requisição: ```urlexemplo.php?nome=Pedro&sobrenome=Silva```, com isso a sua requisição está preparada.
+A utilização é realmente simples, caso algo esteja errado será mostrado no console do navegador, sem mais delongas, veja como utilizar:
+1. Primeiro você instância a Classe **Aefy**
 
- #### Passo 4 
-  Por fim, você utiliza o método ```aefy.request(callback)```, ele irá fazer a requisição utilizando os parâmetros que você passou no método "prepare", para captar a reposta do Backend, você utiliza a função de **Callback** passada, assim que obtiver uma resposta do Backend, essa função será chamada e a resposta será passada como um parâmetro dela.
+    ```javascript
+    const aefy = new Aefy();
+    ```
+
+  2. Agora você precisa preparar sua requisição, para isso, utiliza-se o método **prepare(url, método, objeto)**, o primeiro parâmetro é a URL para qual a requisição será feita, o segundo parâmetro é o método da requisição, os famosos GET e POST, e o ultimo parâmetro é um objeto com o conteúdo da sua requisição, sendo cada atributo um valor que será enviado através da requisição (me aprofundei nisso no tópico abaixo)
+
+      ```javascript
+      aefy.prepare('urlexemplo.php','get',{nome: 'Gabriel', sobrenome: 'Pereira'});
+      ```
+2. Por fim, você utiliza o método **request(callback)** para efetuar a requisição, nele você passa como parâmetro uma função de callback que irá receber os valores recebidos como resposta da requisição
+
+    ```javascript
+    aefy.request((resposta) => {
+    	console.log(`A resposta da requisição foi: ${resposta}`);
+    });
+    ```
+  ## Objeto de conteúdo
+
+Um ponto que eu gosto muito dessa implementação, é o fato de você passar os valores do corpo da requisição através de um objeto, sendo cada atributo um valor, veja só:
+
+Os valores deste objeto:
+```javascript
+{
+	modelo: "Fusion",
+	fabricante: "Ford"
+}
+```
+Seriam enviados através do método GET assim:
+
+```
+ exemplo.com/exemplo.php?modelo=Fusion&fabricante=Ford
+```
+
+E do método POST assim:
+```http
+POST / HTTP/1.1
+Host: exemplo.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+
+modelo=Fusion&fabricante=Ford
+```
+
+## Erros e limitações
+
+Como ainda estou entrando nesse mundo mágico da programação, é possível que hajam erros nessa implementação,  porém, pretendo corrigi-los e com o tempo ir aprimorando o código-, já estou ciente de algumas coisas nas quais irei melhorar e em outras que preciso corrigir, e por favor, se leu até aqui, me dê seu feedback (:
